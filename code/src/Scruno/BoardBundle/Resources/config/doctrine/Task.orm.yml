@@ -1,0 +1,49 @@
+Scruno\BoardBundle\Entity\Task:
+    type: entity
+    table: null
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: 255
+
+        description:
+            type: text
+
+        created:
+            type: datetime
+            nullable: true
+
+        changed:
+            type: datetime
+            nullable: true
+
+        complexity:
+            type: integer
+
+        position:
+            type: integer
+
+    manyToOne:
+        type:
+            targetEntity: TaskType
+
+        owner:
+            targetEntity: Scruno\AuthBundle\Entity\User
+
+        backlog:
+            targetEntity: Backlog
+
+        status:
+            targetEntity: TaskStatus
+
+        boardColumn:
+            targetEntity: BoardColumn
+            inversedBy: Task
+
+
+    lifecycleCallbacks: {  }

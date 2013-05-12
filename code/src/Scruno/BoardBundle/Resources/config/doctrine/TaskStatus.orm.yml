@@ -1,0 +1,52 @@
+Scruno\BoardBundle\Entity\TaskStatus:
+    type: entity
+    table: null
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+
+        position:
+            type: integer
+
+        isComplete:
+            type: boolean
+            column: is_complete
+            nullable: true
+
+        isDefault:
+            type: boolean
+            column: is_default
+            nullable: true
+            default: false
+
+        isInProgress:
+            type: boolean
+            column: is_in_progress
+            nullable: true
+            default: false
+
+        isStopped:
+            type: boolean
+            column: is_stopped
+            nullable: true
+            default: false
+
+        isBlocked:
+            type: boolean
+            column: is_blocked
+            nullable: true
+            default: false
+
+        showInBoard:
+            type: boolean
+            column: show_in_board
+            nullable: true
+            default: true
+
+    lifecycleCallbacks: {  }

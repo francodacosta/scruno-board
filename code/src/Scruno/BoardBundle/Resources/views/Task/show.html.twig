@@ -1,0 +1,93 @@
+{% extends 'ScrunoBoardBundle:Template:base.html.twig' %}
+
+
+{% block topnav %}
+
+    <div class="pull-right nav">
+     <a class="btn" href="{{ path('board_view', {'id': entity.backlog.id }) }}"><i class="icon-th"></i> to {{ entity.backlog }}</a>
+    <a class="btn btn-primary" href="{{ path('task_edit', {'id': entity.id}) }}"><i class="icon-edit"></i> edit</a>
+    </div>
+
+{% endblock %}
+
+{% block body -%}
+
+
+
+    <div class="row task-header">
+
+<!--
+        <div class="actions span3 offset1">
+            <a class="btn" href="{{ path('board_view', {'id': entity.backlog.id }) }}"><i class="icon-th"></i> to {{ entity.backlog }}</a>
+            <a class="btn btn-primary" href="{{ path('task_edit', {'id': entity.id}) }}"><i class="icon-edit"></i> edit</a>
+        </div >-->
+
+    </div>
+
+    <div class="row task-body">
+
+        <div class="description  span8">
+            <div class="page-header">
+                <a class="btn btn-primary pull-right" href="{{ path('task_edit', {'id': entity.id}) }}"><i class="icon-edit"></i> edit</a>
+                <h1>#{{ entity.id }} <small>{{ entity.title }}</small></h1>
+            </div>
+
+
+
+
+            <div class="description clearfix">
+                {{ entity.description|markdown }}
+            </div>
+
+            <a class="btn btn-primary pull-right" href="{{ path('task_edit', {'id': entity.id}) }}"><i class="icon-edit"></i> edit</a>
+        </div>
+
+        <div class="task-info  offset1 span3">
+            <div class="info">
+                {% if entity.status.isBlocked %}
+                    <div class="alert alert-error">
+                        <i class="icon-warning-sign"></i> Item is Blocked
+                    </div>
+                {% endif %}
+                <p>
+                    <span class="badge points" title="complexity"><i class="icon-lightbulb"></i> {{ entity.complexity }}</span>
+                </p>
+                <p>
+                    <span class="badge badge-info" title="priority"><a href="{{ path('board_view', {'id': entity.backlog.id }) }}"><i class="icon-sort"></i> #{{ entity.position }} @ {{ entity.backlog }}</a></span>
+                </p>
+                <p>
+                    <span class="badge" title="type" style="background-color: #{{ entity.type.color }};"><i class="icon-star-empty"></i> {{ entity.type }}</span>
+                </p>
+                <p>
+
+                     {% set color="#999999" %}
+
+                  {% if entity.status.isBlocked %}
+                    {% set color="#f00" %}
+                  {% endif %}
+
+                  {% if entity.status.isComplete %}
+                    {% set color="#0f0" %}
+                  {% endif %}
+
+                  {% if entity.status.isInProgress and not entity.status.isBlocked  %}
+                    {% set color="#FAA732" %}
+                  {% endif %}
+
+                    <span class="badge" title="status" style="background-color: {{ color}};"><i class="icon-heart-empty"></i> {{ entity.status }}</span>
+                </p>
+                <p>
+                    <span class="badge" title="owner"><i class="icon-user"></i> {{ entity.owner }}</span>
+                </p>
+            </div>
+
+            <div class="info">
+                <h6><i class="icon-calendar"></i> Dates:</h6>
+                <p>created: {{ entity.created|date('Y-m-d H:i:s') }}</p>
+                <p>changed: {{ entity.changed|date('Y-m-d H:i:s') }}</p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

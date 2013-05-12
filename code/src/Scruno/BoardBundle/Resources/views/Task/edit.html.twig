@@ -1,0 +1,64 @@
+{% extends 'ScrunoBoardBundle:Template:base.html.twig' %}
+
+{% block topnav %}
+
+    <div class="pull-right nav">
+     <a class="btn" href="{{ path('board_view', {'id': entity.backlog.id }) }}"><i class="icon-th"></i> to {{ entity.backlog }}</a>
+    <a class="btn" href="{{ path('task_show', {'id': entity.id}) }}"><i class="icon-chevron-left"></i> back</a>
+    </div>
+
+{% endblock %}
+
+{% block body -%}
+    <div class="page-header">
+        <h1>#{{ entity.id }} <small>{{ entity.title }}</small></h1>
+    </div>
+
+    <form action="{{ path('task_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        {{ form_errors(edit_form) }}
+
+        <div class="row">
+            <div class="span8">
+                {{ form_row(edit_form.title, {'attr': {'class': 'span8'}}) }}
+
+
+                <label for="{{ edit_form.description.get('id') }}">Description <a class="btn-preview btn btn-small pull-right"><i class="icon-retweet"></i> preview</a></label>
+                {{ form_widget(edit_form.description, {'attr': {'class': 'span8 height', 'style': 'min-height: 300px'}}) }}
+
+                <p>
+                    <button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+                    <a class="btn" href="{{ path('task_show', {'id': entity.id}) }}"><i class="icon-chevron-left"></i> Back</a>
+                </p>
+            </div>
+
+            <div class="span3 offset1 ">
+                <label for="{{ edit_form.status.get('id') }}"><i class="icon-heart-empty"></i> Status</label>
+                {{ form_widget(edit_form.status) }}
+
+                <label for="{{ edit_form.complexity.get('id') }}"><i class="icon-lightbulb"></i> Complexity</label>
+                {{ form_widget(edit_form.complexity) }}
+
+                <label for="{{ edit_form.owner.get('id') }}"><i class="icon-user"></i> Owner</label>
+                {{ form_widget(edit_form.owner) }}
+
+                <label for="{{ edit_form.type.get('id') }}"><i class="icon-star-empty"></i> Type</label>
+                {{ form_widget(edit_form.type) }}
+
+                <label for="{{ edit_form.backlog.get('id') }}"><i class="icon-th"></i> Backlog</label>
+                {{ form_widget(edit_form.backlog) }}
+
+                {{ form_widget(edit_form._token) }}
+
+
+                <div style="display: none;">
+                    {{ form_rest(edit_form) }}
+                </div>
+            </div>
+        <!-- {{ form_widget(edit_form) }} -->
+
+        </div>
+    </form>
+
+
+{% endblock %}

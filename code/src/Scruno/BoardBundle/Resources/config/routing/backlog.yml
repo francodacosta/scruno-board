@@ -1,0 +1,30 @@
+backlog:
+    pattern:  /
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:index" }
+
+backlog_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:show" }
+
+backlog_new:
+    pattern:  /new
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:new" }
+
+backlog_create:
+    pattern:  /create
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:create" }
+    requirements: { _method: post }
+
+backlog_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:edit" }
+
+backlog_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:update" }
+    requirements: { _method: post|put }
+
+backlog_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ScrunoBoardBundle:Backlog:delete" }
+    requirements: { _method: post|delete }

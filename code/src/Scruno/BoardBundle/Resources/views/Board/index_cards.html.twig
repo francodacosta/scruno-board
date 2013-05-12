@@ -1,0 +1,196 @@
+{% extends 'ScrunoBoardBundle:Board:base.html.twig' %}
+
+
+{% block title %}
+    {{ backlog }} @  {{ parent() }}
+
+{% endblock %}
+
+
+
+{% block body -%}
+
+
+
+    {% set columnIds = [] %}
+
+    {% for column in availableColumns  %}
+            {%  set columnIds = columnIds|merge([column.id])  %}
+    {% endfor  %}
+
+    {% set tasksOfDefaultColumn = []%}
+    {% for entity in entities %}
+        {% if entity.boardColumn.id not in columnIds %}
+            {% set tasksOfDefaultColumn = tasksOfDefaultColumn|merge([entity]) %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="page-header">
+        <h1>{{ backlog }} <small><i class="icon-th"></i> scrum board view</small></h1>
+    </div>
+
+    <!-- <div class="row">
+        {% for status in availableColumns %}
+            {% set colWidth = (12 / availableColumns|length)|abs %}
+            <div class="column span{{colWidth}}" data="{{ status.id }}">
+                 <h1>{{ status }}</h1>
+                <div class="card dummy" data="0"></div>
+                 {% for entity in entities %}
+                    {% if entity.status.id == status.id %}
+                        <div class="card" data="{{entity.id }}">
+                            <p class="header" style="background: #{{ entity.type.color }};"># {{ entity.id }}</p>
+                            <p>{{ entity }}</p>
+                            <p class="info">
+
+                                <span class="badge complexity">{{ entity.complexity }}</span>
+                                <span class="label" style="background: #{{ entity.type.color }};">{{entity.type}}</span>
+                                <spam class="pull-right"><i class="icon-user"></i> {{ entity.owner }}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                 {% endfor %}
+            </div>
+        {% endfor %}
+    </div> -->
+
+<div class="row cards">
+        {% for column in availableColumns %}
+            {% set colWidth = (12 / availableColumns|length)|abs %}
+            <div class="column span{{colWidth}}" data="{{ column.id }}">
+            <h3 class="text-center">{{ column }}</h3>
+            <!-- <div class="card dummy" data="0"></div> -->
+
+                 {% for entity in entities %}
+                    {% if entity.boardColumn.id == column.id %}
+                        <div class="card" data="{{entity.id }}">
+                            <p class="header" style="background: #{{ entity.type.color }};"># {{ entity.id }}</p>
+                            <p>
+                                {% if entity.title|length > 36 %}
+                                    <small><a title="{{ entity.title }}" href="{{ path('task_show', { 'id': entity.id }) }}">{{ entity.title[:36] }}</a>...</small>
+                                {% else %}
+                                    <a title="{{ entity.title }}" href="{{ path('task_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+                                {% endif %}
+
+                            </p>
+                            <p class="info">
+
+                                <span class="badge complexity">{{ entity.complexity }}</span>
+                                <span class="label" style="background: #{{ entity.type.color }};">{{entity.type}}</span>
+                                {% if entity.status.isBlocked %}
+                                        <i class="icon-warning-sign blocked" title="Item is Blocked"></i>
+                                {% endif %}
+                                <spam class="pull-right"><i class="icon-user"></i> {{ entity.owner }}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+
+
+                 {% endfor %}
+
+                 {% if column.isDefault %}
+                        {% for entity in tasksOfDefaultColumn %}
+                        <div class="card" data="{{entity.id }}">
+                            <p class="header" style="background: #{{ entity.type.color }};"># {{ entity.id }}</p>
+                            <p>{{ entity }}</p>
+                            <p class="info">
+
+                                <span class="badge complexity">{{ entity.complexity }}</span>
+                                <span class="label" style="background: #{{ entity.type.color }};">{{entity.type}}</span>
+                                {% if entity.status.isBlocked %}
+                                    <div class="alert alert-error">
+                                        <i class="icon-warning-sign blocked"></i> Item is Blocked
+                                    </div>
+                                {% endif %}
+                                <spam class="pull-right"><i class="icon-user"></i> {{ entity.owner }}</span>
+                            </p>
+                        </div>
+
+                 {% endfor %}
+                    {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+  <script>
+$(function() {
+    $( ".column" ).sortable({
+        dropOnEmpty: true,
+        cursor: "move",
+        items: ".card" ,
+        connectWith:".column",
+        // accept: ".card",
+        placeholder:"placeholder",
+        opacity: 0.5 ,
+        forcePlaceholderSize: true,
+        forceHelperSize: true,
+        helper: "clone" ,
+        axis: "x" ,
+        revert: "invalid",
+        receive: function( event, ui ) {
+            var taskId = $(ui.item).attr('data');
+
+            var columnId = $(ui.item).parent('.column').attr('data');
+            // get column id
+            var requestBody = {};
+            requestBody[taskId] = columnId;
+
+             console.log(taskId, columnId);
+             $.ajax({
+                url: '/board/bulk/task/column',
+                type: 'PUT',
+                cache: false,
+                data: {data: requestBody},
+                success: function(data, status, jqXHR) {
+                    console.log(status);
+                },
+                error: function (jqXHR, status, error) {
+                    alert(status + ' ' + error);
+                }
+
+            });
+        }
+
+    });
+});
+
+
+// stop: function(event, ui){
+
+
+//         var tasksInStatus = {};
+
+//         $('.row .column').each(function(index, obj){
+//             var statusId = $(obj).attr('data');
+//             $('.card', obj).each(function(index, card){
+//                 var taskId = $(card).attr('data');
+//                 if (taskId > 0 ) {
+//                     tasksInStatus[taskId] = statusId
+//                 }
+//             });
+//         })
+
+//         $.ajax({
+//             url: '/board/bulk/task/column',
+//             type: 'PUT',
+//             cache: false,
+//             data: {data: tasksInStatus},
+//             success: function(data, status, jqXHR) {
+//                 console.log(status);
+//             },
+//             error: function (jqXHR, status, error) {
+//                 alert(status + ' ' + error);
+//             }
+
+//         });
+//      }});
+
+
+</script>
+
+
+
+    {% endblock %}
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Scruno{% endblock %}</title>
+
+
+
+        {% stylesheets
+            'assets/bootstrap/css/bootstrap.min.css'
+            'assets/bootstrap/css/bootstrap-responsive.min.css'
+            'assets/font-awesome/css/font-awesome.min.css'
+            'assets/jquery-ui-bootstrap/jquery-ui-1.10.0.custom.css'
+            '@ScrunoBoardBundle/Resources/public/css/template.css'
+
+            output='/assets/css/base.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% javascripts
+            'assets/jquery/jquery-1.9.1.min.js'
+            'assets/jquery/jquery-ui-1.10.2.min.js'
+            'assets/bootstrap/js/bootstrap.min.js'
+            output='/assets/js/base.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Scruno</a>
+                <ul class="nav">
+                    <li class="active"><a href="{{ path('home') }}">Home</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+
+                {% block topnav %}{% endblock %}
+            </div>
+        </div>
+
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,16 @@
+board_view:
+    pattern:  /{id}/{output}
+    defaults: { _controller: "ScrunoBoardBundle:Board:index", output:"list" }
+    methods:  [GET]
+    requirements:
+        id: \d+
+
+board_bulk_status_change:
+    pattern:  /bulk/task/column
+    methods:  [PUT]
+    defaults: { _controller: "ScrunoBoardBundle:Board:bulkColumnChange"}
+
+board_bulk_task_position_change:
+    pattern:  /bulk/task/order
+    methods:  [PUT]
+    defaults: { _controller: "ScrunoBoardBundle:Board:bulkPositionChange"}

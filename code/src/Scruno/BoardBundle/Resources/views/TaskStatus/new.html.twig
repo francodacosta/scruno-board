@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TaskStatus creation</h1>
+
+    <form action="{{ path('admin_task_status_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_task_status') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

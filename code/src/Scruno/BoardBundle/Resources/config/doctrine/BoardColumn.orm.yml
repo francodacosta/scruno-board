@@ -1,0 +1,32 @@
+Scruno\BoardBundle\Entity\BoardColumn:
+    type: entity
+    table: null
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+
+        position:
+            type: integer
+
+        isDefault:
+            column: is_default
+            type: boolean
+            default: false
+            nullable: true
+
+    manyToOne:
+        status:
+            targetEntity: TaskStatus
+
+    oneToMany:
+        tasks:
+            targetEntity: Task
+            mappedBy: BoardColumn
+
+    lifecycleCallbacks: {  }

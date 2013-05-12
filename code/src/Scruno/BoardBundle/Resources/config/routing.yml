@@ -1,0 +1,31 @@
+ScrunoBoardBundle_task_type:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/tasktype.yml"
+    prefix:   /admin/task/type
+
+ScrunoBoardBundle_backlog:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/backlog.yml"
+    prefix:   /admin/backlog
+
+ScrunoBoardBundle_admin_task_status:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/taskstatus.yml"
+    prefix:   /admin/task/status
+
+ScrunoBoardBundle_admin_board_column:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/boardcolumn.yml"
+    prefix:   /admin/board/column
+
+ScrunoBoardBundle_task:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/task.yml"
+    prefix:   /task
+
+ScrunoBoardBundle_board:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/board.yml"
+    prefix:   /board
+
+ScrunoBoardBundle_foo:
+    resource: "@ScrunoBoardBundle/Resources/config/routing/foo.yml"
+    prefix:   /foo
+
+home:
+    pattern:  /
+    defaults: { _controller: "ScrunoBoardBundle:Board:list" }

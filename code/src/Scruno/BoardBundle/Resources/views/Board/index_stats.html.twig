@@ -1,0 +1,97 @@
+{% extends 'ScrunoBoardBundle:Board:base.html.twig' %}
+
+
+{% block title %}
+    {{ backlog }} @  {{ parent() }}
+
+{% endblock %}
+
+
+
+{% block body -%}
+
+
+    <div class="page-header">
+        <h1>{{ backlog }} <small><i class="icon-bar-chart"></i>  statistics</small></h1>
+    </div>
+
+    {% set totalPoints = 0 %}
+    {% set executedPoints = 0 %}
+    {% set inprogressPoints = 0 %}
+    {% set stoppedPoints = 0 %}
+
+    {% set totalStories = 0 %}
+    {% set executedStories = 0 %}
+    {% set progressStories = 0 %}
+    {% set stoppedStories = 0 %}
+
+    {% for entity in entities %}
+        {% if entity.status.isComplete  %}
+            {% set executedPoints = executedPoints + entity.complexity %}
+            {% set executedStories = executedStories + 1 %}
+        {% endif %}
+
+        {% if entity.status.isInProgress  %}
+            {% set inprogressPoints = inprogressPoints + entity.complexity %}
+            {% set progressStories = progressStories + 1 %}
+        {% endif %}
+
+        {% if entity.status.isStopped  %}
+            {% set stoppedPoints = stoppedPoints + entity.complexity %}
+            {% set stoppedStories = stoppedStories + 1 %}
+        {% endif %}
+
+        {% set totalPoints = totalPoints + entity.complexity %}
+        {% set totalStories = totalStories + 1 %}
+
+    {% endfor %}
+
+    {% set executedPercent = executedPoints * 100 / totalPoints %}
+    {% set progressPercent = inprogressPoints * 100 / totalPoints %}
+    {% set stoppedPercent = stoppedPoints * 100 / totalPoints %}
+
+    {% set executedStoriesPercent = executedStories * 100 / totalStories %}
+    {% set progressStoriesPercent = progressStories * 100 / totalStories %}
+    {% set stoppedStoriesPercent = stoppedStories * 100 / totalStories %}
+
+
+
+    <div class="alert stats">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h2>Points: </h2>
+            <div class="progress">
+                <div class="bar bar-success" style="width: {{ executedPercent }}%;">{{ executedPoints }}</div>
+
+                {% if inprogressPoints > 0 %}
+                    <div class="bar bar-warning" style="width: {{ progressPercent }}%;">{{ inprogressPoints }}</div>
+                {% endif %}
+
+                {% if stoppedPoints > 0%}
+                    <div class="bar bar-danger" style="width: {{ stoppedPercent }}%;">{{ stoppedPoints }}</div>
+                {% endif %}
+
+            </div>
+            <p><small>legend: <span class="label label-success">done</span> <span class="label label-warning">in progress</span> <span class="label label-important">stopped</span></small></p>
+    </div>
+
+    <div class="alert stats">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h2>Stories: </h2>
+            <div class="progress">
+                <div class="bar bar-success" style="width: {{ executedStoriesPercent }}%;">{{ executedStories }}</div>
+
+                {% if inprogressPoints > 0 %}
+                    <div class="bar bar-warning" style="width: {{ progressStoriesPercent }}%;">{{ progressStories }}</div>
+                {% endif %}
+
+                {% if stoppedPoints > 0%}
+                    <div class="bar bar-danger" style="width: {{ stoppedStoriesPercent }}%;">{{ stoppedStories }}</div>
+                {% endif %}
+
+            </div>
+            <p><small>legend: <span class="label label-success">done</span> <span class="label label-warning">in progress</span> <span class="label label-important">stopped</span></small></p>
+    </div>
+
+
+    {% endblock %}
+

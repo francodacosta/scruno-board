@@ -1,0 +1,9 @@
+scruno_auth:
+    resource: "@ScrunoAuthBundle/Resources/config/routing.yml"
+    prefix:   /
+
+scruno_board:
+    resource: "@ScrunoBoardBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

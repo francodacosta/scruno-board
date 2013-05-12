@@ -1,0 +1,18 @@
+{% extends 'ScrunoBoardBundle:Template:base.html.twig' %}
+
+{% block body -%}
+    <h1>Backlog list</h1>
+
+    <table class="records_list">
+        <thead>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('board_view', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

@@ -1,0 +1,30 @@
+foo:
+    pattern:  /
+    defaults: { _controller: "ScrunoBoardBundle:foo:index" }
+
+foo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ScrunoBoardBundle:foo:show" }
+
+foo_new:
+    pattern:  /new
+    defaults: { _controller: "ScrunoBoardBundle:foo:new" }
+
+foo_create:
+    pattern:  /create
+    defaults: { _controller: "ScrunoBoardBundle:foo:create" }
+    requirements: { _method: post }
+
+foo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ScrunoBoardBundle:foo:edit" }
+
+foo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ScrunoBoardBundle:foo:update" }
+    requirements: { _method: post|put }
+
+foo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ScrunoBoardBundle:foo:delete" }
+    requirements: { _method: post|delete }

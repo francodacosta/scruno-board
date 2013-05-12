@@ -1,0 +1,17 @@
+Scruno\BoardBundle\Entity\foo:
+    type: entity
+    table: null
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        content:
+            type: text
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

@@ -1,0 +1,14 @@
+parameters:
+#    scruno_board.example.class: Scruno\BoardBundle\Example
+
+services:
+#    scruno_board.example:
+#        class: %scruno_board.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    board_service:
+        class: Scruno\BoardBundle\Services\BoardService
+        arguments: [@doctrine.orm.default_entity_manager]
+
+    task_service:
+        class: Scruno\BoardBundle\Services\TaskService
+        arguments: [@doctrine.orm.default_entity_manager]

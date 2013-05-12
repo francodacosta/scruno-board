@@ -1,0 +1,30 @@
+admin_task_status:
+    pattern:  /
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:index" }
+
+admin_task_status_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:show" }
+
+admin_task_status_new:
+    pattern:  /new
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:new" }
+
+admin_task_status_create:
+    pattern:  /create
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:create" }
+    requirements: { _method: post }
+
+admin_task_status_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:edit" }
+
+admin_task_status_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:update" }
+    requirements: { _method: post|put }
+
+admin_task_status_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ScrunoBoardBundle:TaskStatus:delete" }
+    requirements: { _method: post|delete }

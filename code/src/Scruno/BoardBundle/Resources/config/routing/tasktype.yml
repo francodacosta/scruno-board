@@ -1,0 +1,30 @@
+task_type:
+    pattern:  /
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:index" }
+
+task_type_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:show" }
+
+task_type_new:
+    pattern:  /new
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:new" }
+
+task_type_create:
+    pattern:  /create
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:create" }
+    requirements: { _method: post }
+
+task_type_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:edit" }
+
+task_type_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:update" }
+    requirements: { _method: post|put }
+
+task_type_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ScrunoBoardBundle:TaskType:delete" }
+    requirements: { _method: post|delete }

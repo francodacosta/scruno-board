@@ -1,0 +1,119 @@
+{% extends 'ScrunoBoardBundle:Board:base.html.twig' %}
+
+
+{% block title %}
+    {{ backlog }} @  {{ parent() }}
+
+{% endblock %}
+
+
+
+{% block body -%}
+
+    <div class="page-header">
+        <h1>{{ backlog }} <small><i class="icon-list"></i> list view</small></h1>
+    </div>
+
+    <ul id="task-list" class="">
+        <li class="title">
+                 <span class="span1">
+                </span>
+
+                <span class="span5">
+                   title
+                </span>
+
+                <span class="span1">
+                  complexity
+                </span>
+
+                <span class="span2">
+                   Status
+                </span>
+
+                <span class="span2">
+                   Owner
+                </span>
+            </li>
+        {% for entity in entities %}
+            <li class="sortable" data="{{ entity.id }}">
+                 <span class="span1">
+                    <i class="handle icon-certificate"></i>
+                    <span class="label" style="background-color: #{{ entity.type.color }};">{{ entity.type }}</span>
+                </span>
+
+                <span class="span5" >
+                    {% if entity.status.isBlocked %}
+                        <i class="icon-warning-sign blocked" title="Item is Blocked"></i>
+                     {% endif %}
+                    <a href="{{ path('task_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+                </span>
+
+                <span class="span1 text-center">
+                   <span class="badge" _style="background-color: #{{ entity.type.color}};">{{ entity.complexity }}</span>
+                </span>
+
+                <span class="span2">
+                  {% set color="#999999" %}
+
+                  {% if entity.status.isBlocked %}
+                    {% set color="#f00" %}
+                  {% endif %}
+
+                  {% if entity.status.isComplete %}
+                    {% set color="#0f0" %}
+                  {% endif %}
+
+                  {% if entity.status.isInProgress and not entity.status.isBlocked  %}
+                    {% set color="#FAA732" %}
+                  {% endif %}
+
+
+                   <span class="label" style="background-color: {{ color}};">{{ entity.status }}</span>
+                </span>
+
+                <span class="span2">
+                   <i class="icon-user"></i> {{ entity.owner }}
+                </span>
+            </li>
+        {% endfor %}
+
+    </ul>
+
+
+
+
+  <script>
+$(function() {
+$( "#task-list" ).sortable({ cursor: "move", items: "> li.sortable" ,  revert: true,  opacity: 0.5 , placeholder: "placeholder", forceHelperSizeType: true,helper: "clone" , axis: "y", stop: function(event, ui) {
+
+  var position = 1;
+  var order = {};
+  $('#task-list li.sortable').each( function (index, obj) {
+    order[$(obj).attr('data')] = position;
+    position += 1;
+  });
+
+  $.ajax({
+        url: '/board/bulk/task/order',
+        type: 'PUT',
+        cache: false,
+        data: {data: order},
+        success: function(data, status, jqXHR) {
+            console.log(status);
+        },
+        error: function (jqXHR, status, error) {
+            alert(status + ' ' + error);
+        }
+
+    });
+
+} });
+// $( "#task-list" ).sortable({ cursor: "move", items: "> li.sortable" ,  revert: true,  opacity: 0.5 , placeholder: "placeholder", forceHelperSizeType: true,helper: "clone" , handle: ".handle",   axis: "y" });
+// $( "" ).disableSelection();
+});
+</script>
+
+
+    {% endblock %}
+
